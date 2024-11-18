@@ -109,8 +109,13 @@ footer {
     margin: 20px 20%;
   }
 
+  header h1 {
+    margin-left: 20%;
+  }
+
   header ul {
     width: 200px;
+    margin-right: 22%;
   }
 
   .introduce {
