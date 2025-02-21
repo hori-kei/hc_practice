@@ -5,17 +5,13 @@ members = ["A", "B", "C", "D", "E", "F"]
 # この時新しい変数に入れ直すとNoneを返すためmembersの元の値を変更する。
 random.shuffle(members)
 # random.choiceでTrueかFalseを指定できるようにbool型のサブ型の1,0でリストを作る
-choice = [1, 0]
+choice = [2, 3]
 
 
 def split_group():
-
-    if random.choice(choice):
-        group1 = sorted(members[:3])
-        group2 = sorted(members[3:])
-    else:
-        group1 = sorted(members[:2])
-        group2 = sorted(members[2:])
+    random_choice = random.choice(choice)
+    group1 = sorted(members[:random_choice])
+    group2 = sorted(members[random_choice:])
 
     return group1, group2
 
