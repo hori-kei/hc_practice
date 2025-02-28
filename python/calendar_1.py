@@ -31,7 +31,7 @@ def get_calendar(year, month):  # ここのyearとmonthにはget_year_monthでre
     """ 指定された年月のカレンダーを表示する """
 
     # 1. ヘッダー部分を出力
-    print("" + f"{month}月 {year}".center(20) + "")  # 年月を中央寄せ
+    print(f"{month}月 {year}".center(20))  # 年月を中央寄せ
     print("月 火 水 木 金 土 日")  # 月曜始まり
 
     # 2. その月の 1日が何曜日かを取得（0: 月曜, 6: 日曜）
@@ -56,7 +56,7 @@ def get_calendar(year, month):  # ここのyearとmonthにはget_year_monthでre
 
     # 空白部分と日付部分を結合して、全体のカレンダーのリストを作る
     calendar_entries = empty_slots + day_slots
-    
+
     # リストを7個ずつ（1週間分）に分け、各行として出力する
     for i in range(0, len(calendar_entries), 7):
         week_entries = calendar_entries[i: i + 7]
