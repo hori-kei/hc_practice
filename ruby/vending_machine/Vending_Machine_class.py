@@ -9,11 +9,9 @@ class VendingMachine:
         self.juices = []  # 在庫リスト
         self.sales = 0  # 売上金
 
-        # 初期状態でペプシ、いろはす、モンスターを5本ずつ追加
         self.initialize_stock()
 
     def initialize_stock(self):
-        """初期在庫でペプシを5本追加"""
         for _ in range(5):
             self.juices.append(Juice("ペプシ", 150))
 
@@ -23,14 +21,12 @@ class VendingMachine:
             self.juices.append(Juice("モンスター", 230))
 
     def stock(self, juice_name):
-        """指定されたジュースの在庫数を取得"""
         count = sum(1 for juice in self.juices if juice.juice_name == juice_name)
         if count > 0:
             return f"{juice_name}の在庫: {count}本"
         raise VendingMachineError("指定されたジュースはありません")
 
     def restock(self, juice_name, stock):
-        """ジュースを補充する"""
         if stock <= 0:
             raise VendingMachineError("１個以上補充してください")
 
@@ -50,11 +46,9 @@ class VendingMachine:
         self.sales += price
 
     def purchase_check(self, suica: Suica, juice_name):
-        # 在庫確認
         if not any(juice.juice_name == juice_name for juice in self.juices):
             raise VendingMachineError("在庫がありません")
 
-        # 価格確認
         for juice in self.juices:
             if juice.juice_name == juice_name:
                 if suica.balance < juice.price:
@@ -64,7 +58,6 @@ class VendingMachine:
         raise VendingMachineError("指定されたジュースはありません")
 
     def purchase(self, suica: Suica, juice_name):
-        """ジュースを購入する"""
         for juice in self.juices:
             if juice.juice_name == juice_name:
                 try:
