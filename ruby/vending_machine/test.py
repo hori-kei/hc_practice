@@ -1,29 +1,41 @@
-from juice import Juice
 from suica_class import Suica
-from Vending_Machine_class import VendingMachine
+from vending_machine_class import VendingMachine
 
 vm = VendingMachine()
 suica = Suica()
-print(suica.balance)
-suica.balance = 1000
-print(suica.balance)
+print(f"初期金額:{suica.balance}")
+vm.increase_stock()
+suica.balance = 500
+print(f"500円追加後のSuicaの残高:{suica.balance}")
+print()
 
-print(vm.purchaseable_juices())
-print(vm.purchase_process(suica, "ペプシ"))
+print("*" * 10 + f"ペプシ購入処理" + "*" * 10)
+print(vm.restock("ペプシ", 3))
 print(vm.stock("ペプシ"))
-print(f"売上: {vm.sales}円")
-
-
-vm.add_juice(Juice("いろはす", 120, 5))
-vm.add_juice(Juice("モンスター", 230, 5))
-print(vm.purchaseable_juices())
-print(vm.purchase_process(suica, "ペプシ"))
-print(vm.purchase_process(suica, "いろはす"))
-print(vm.purchase_process(suica, "モンスター"))
-print(f"売上: {vm.sales}円")
+print(vm.purchase(suica, "ペプシ"))
+print(suica.balance)
 print(vm.stock("ペプシ"))
+print()
+
+
+print("*" * 10 + f"いろはす購入処理" + "*" * 10)
+print(vm.restock("いろはす", 3))
 print(vm.stock("いろはす"))
-print(vm.stock("モンスター"))
-print(vm.restock_juice("ペプシ", 2))
-print(vm.stock("ペプシ"))
+print(vm.purchase(suica, "いろはす"))
 print(suica.balance)
+print(vm.stock("いろはす"))
+print()
+
+print("*" * 10 + f"モンスター購入処理" + "*" * 10)
+print(vm.restock("モンスター", 3))
+print(vm.stock("モンスター"))
+print(vm.purchase(suica, "モンスター"))
+print(suica.balance)
+print(vm.stock("モンスター"))
+print()
+
+
+suica.balance = 2000
+for _ in range(7):
+    print(vm.purchase(suica, "ペプシ"))
+print(vm.purchaseable_juices())
