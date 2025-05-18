@@ -1,0 +1,91 @@
+[users]
+  *id
+  email
+  phone_number
+  user_name
+  full_name
+  introduce
+  location_id
+  website
+  birthday
+  profile_photo
+  avatar_photo
+  created_at
+  updated_at
+
+[tweets]
+  *id
+  user_id
+  text
+  created_at
+  updated_at
+
+[likes]
+  *id
+  user_id
+  tweet_id
+  created_at
+  updated_at
+
+[retweets]
+  *id
+  user_id
+  tweet_id
+  created_at
+  updated_at
+
+[follows]
+  *id
+  user_id
+  followed_user_id
+  created_at
+  updated_at
+
+[messages]
+  *id
+  sender_id
+  receiver_id
+  content
+  created_at
+  updated_at
+
+[bookmarks]
+  *id
+  user_id
+  tweet_id
+  created_at
+  updated_at
+
+[locations]
+  *id
+  location
+
+[notifications]
+  *id
+  actor_id
+  recipient_id
+  action
+  retweet_id
+  like_id
+  follow_id
+  created_at
+  updated_at
+
+# Relationships
+users *--1 locations
+tweets *--1 users
+likes *--1 users
+likes *--1 tweets
+retweets *--1 users
+retweets *--1 tweets
+follows *--1 users       # user_id
+follows *--1 users       # followed_user_id
+messages *--1 users      # sender_id
+messages *--1 users      # receiver_id
+bookmarks *--1 users
+bookmarks *--1 tweets
+notifications *--1 users     # actor_id
+notifications *--1 users     # recipient_id
+notifications *--1 likes
+notifications *--1 follows
+notifications *--1 retweets
