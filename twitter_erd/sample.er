@@ -1,91 +1,89 @@
 [users]
-  *id
-  email
-  phone_number
-  user_name
-  full_name
-  introduce
-  location_id
-  website
-  birthday
-  profile_photo
-  avatar_photo
-  created_at
-  updated_at
-
-[tweets]
-  *id
-  user_id
-  text
-  created_at
-  updated_at
-
-[likes]
-  *id
-  user_id
-  tweet_id
-  created_at
-  updated_at
-
-[retweets]
-  *id
-  user_id
-  tweet_id
-  created_at
-  updated_at
-
-[follows]
-  *id
-  user_id
-  followed_user_id
-  created_at
-  updated_at
-
-[messages]
-  *id
-  sender_id
-  receiver_id
-  content
-  created_at
-  updated_at
-
-[bookmarks]
-  *id
-  user_id
-  tweet_id
-  created_at
-  updated_at
+  *id {label: "bigint, not null"}
+  email {label: "varchar, not null, uniq"}
+  phone_number {label: "varchar, not null, uniq"}
+  user_name {label: "varchar, not null, uniq"}
+  full_name {label: "varchar"}
+  introduce {label: "varchar"}
+  location_id {label: "bigint, FK(locations)"}
+  website {label: "varchar"}
+  birthday {label: "date, not null"}
+  profile_photo {label: "varchar"}
+  avatar_photo {label: "varchar"}
+  created_at {label: "datetime, not null"}
+  updated_at {label: "datetime, not null"}
 
 [locations]
-  *id
-  location
+  *id {label: "bigint, not null"}
+  location {label: "varchar, not null"}
+
+[tweets]
+	*id {label: "bigint, not null"}
+	user_id {label: "bigint, not null, FK(users)"}
+	text {label: "varchar(140), not null"}
+	created_at { label: "datetime, not null"}
+ 	updated_at { label: "datetime, not null"}
+
+[likes]
+  *id {label: "bigint, not null"}
+  user_id {label: "bigint, not null, FK(users)"}
+  tweet_id {label: "bigint, not null, FK(tweets)"}
+  created_at { label: "datetime, not null"}
+  updated_at { label: "datetime, not null"}
+
+[retweets]
+  *id {label: "bigint, not null"}
+  user_id {label: "bigint, not null, FK(users)"}
+  tweet_id {label: "bigint, not null, FK(tweets)"}
+  created_at {label: "datetime, not null"}
+  updated_at {label: "datetime, not null"}
+
+[follows]
+  *id {label: "bigint, not null"}
+  follower_id {label: "bigint, not null, FK(users)"}
+  followee_id {label: "bigint, not null, FK(users)"}
+  created_at {label: "datetime, not null"}
+  updated_at {label: "datetime, not null"}
+
+[messages]
+  *id {label: "bigint, not null"}
+  sender_id {label: "bigint, not null, FK(users)"}
+  receiver_id {label: "bigint, not null, FK(users)"}
+  content {label: "varchar, not null"}
+  created_at {label: "datetime, not null"}
+  updated_at {label: "datetime, not null"}
+
+[bookmarks]
+  *id {label: "bigint, not null"}
+  user_id {label: "bigint, not null, FK(users)"}
+  tweet_id {label: "bigint, not null, FK(tweets)"}
+  created_at {label: "datetime, not null"}
+  updated_at {label: "datetime, not null"}
 
 [notifications]
-  *id
-  actor_id
-  recipient_id
-  action
-  retweet_id
-  like_id
-  follow_id
-  created_at
-  updated_at
+	*id {label: "bigint, not null"}
+	actor_id {label: "bigint, not null, FK(users)"}
+	recipient_id {label: "bigint, not null, FK(users)"}
+	retweet_id {label: "bigint,  FK(retweets)"}
+	like_id {label: "bigint, FK(likes)"}
+	follow_id {label: "bigint, FK(follows)"}
+	created_at {label: "datetime, not null"}
+	updated_at {label: "datetime, not null"}
 
-# Relationships
-users *--1 locations
-tweets *--1 users
-likes *--1 users
-likes *--1 tweets
-retweets *--1 users
-retweets *--1 tweets
-follows *--1 users       # user_id
-follows *--1 users       # followed_user_id
-messages *--1 users      # sender_id
-messages *--1 users      # receiver_id
-bookmarks *--1 users
-bookmarks *--1 tweets
-notifications *--1 users     # actor_id
-notifications *--1 users     # recipient_id
-notifications *--1 likes
-notifications *--1 follows
-notifications *--1 retweets
+tweets     *--1 users
+likes      *--1 users
+likes      *--1 tweets
+retweets   *--1 users
+retweets   *--1 tweets
+follows    *--1 users          # フォローする側（user_id）
+follows    *--1 users          # フォローされる側（followed_user_id）
+messages   *--1 users          # 送信者（sender_id）
+messages   *--1 users          # 受信者（receiver_id）
+bookmarks  *--1 users
+bookmarks  *--1 tweets
+notifications *--1 users       # 通知を起こしたユーザー（actor_id）
+notifications *--1 users       # 通知を受け取るユーザー（recipient_id）
+notifications *--1 likes       # 対象がlikeだった場合
+notifications *--1 follows     # 対象がfollowだった場合
+notifications *--1 retweets    # 対象がretweetだった場合
+users      *--1 locations      # ユーザーは1つのlocationに属する
